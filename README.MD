@@ -1,5 +1,5 @@
-#deploy facerec service
-##for python3.8
+# deploy facerec service
+## for python3.8
 ```
 pip install dlib
 pip install opencv-python
@@ -29,8 +29,8 @@ sqlite_server:app \
 
 ```
 
-#API
-##Face Detect
+# API
+## Face Detect
 ```bash
 curl -X PUT -T DSCN0977.JPG "http://172.17.0.1:12546/api/detect" |python -m json.tool
 ```
@@ -68,7 +68,7 @@ curl -X PUT -T DSCN0977.JPG "http://172.17.0.1:12546/api/detect" |python -m json
 }
 ```
 
-##Face Recognition
+## Face Recognition
 ```bash
 curl -X PUT  "http://172.17.0.1:12547/api/search?facetoken=5827851bb313f2bd9b0a43871bace91098c2d875c7e2914db8dd733dee419d51&max-distance=0.36" |python -m json.tool
 ```
@@ -98,7 +98,7 @@ curl -X PUT  "http://172.17.0.1:12547/api/search?facetoken=5827851bb313f2bd9b0a4
 ```
 The 'distance' refers to the quantitative value of the difference between the avatar and the input avatar. The smaller the difference, the higher the credibility that the two avatars are the same person.
 
-##Face Token Delete
+## Face Token Delete
 ```bash
 curl -X DELETE  "http://172.17.0.1:12547/api/search?facetoken=5827851bb313f2bd9b0a43871bace91098c2d875c7e2914db8dd733dee419d51"
 ```
