@@ -1,5 +1,7 @@
-# deploy facerec service
-## for python3.8
+基于Dlib + Flask + Sqlite的人脸检测和识别服务。本地化部署，提供RESTFul风格的API接口。<br/>
+Face detection and recognition service based on Dlib + Flask + Sqlite. Localized deployment, providing RESTFul style API interface.
+# Deploy facerec service
+## For python3.8
 ```
 pip install dlib
 pip install opencv-python
@@ -8,7 +10,7 @@ pip install urllib3
 pip install gunicorn
 pip install gevent
 
-Start the dlib rest server and sqlite_server. Use multi-process model to accelerate face detect.
+#Start the dlib rest server and sqlite_server. Use multi-process model to accelerate face detect.
 gunicorn \
 --workers=4 \
 --worker-class=gevent \
@@ -32,7 +34,7 @@ sqlite_server:app \
 # API
 ## Face Detect
 ```bash
-curl -X PUT -T DSCN0977.JPG "http://172.17.0.1:12546/api/detect" |python -m json.tool
+curl -X PUT -T DSCN0977.JPG "http://172.17.0.1:5000/api/detect" |python -m json.tool
 ```
 
 ```json
@@ -70,7 +72,7 @@ curl -X PUT -T DSCN0977.JPG "http://172.17.0.1:12546/api/detect" |python -m json
 
 ## Face Recognition
 ```bash
-curl -X PUT  "http://172.17.0.1:12547/api/search?facetoken=5827851bb313f2bd9b0a43871bace91098c2d875c7e2914db8dd733dee419d51&max-distance=0.36" |python -m json.tool
+curl -X PUT  "http://172.17.0.1:5001/api/search?facetoken=5827851bb313f2bd9b0a43871bace91098c2d875c7e2914db8dd733dee419d51&max-distance=0.36" |python -m json.tool
 ```
 ```json
 {
@@ -96,9 +98,10 @@ curl -X PUT  "http://172.17.0.1:12547/api/search?facetoken=5827851bb313f2bd9b0a4
     "success": true
 }
 ```
-The 'distance' refers to the quantitative value of the difference between the avatar and the input avatar. The smaller the difference, the higher the credibility that the two avatars are the same person.
+The 'max-distance' in the URL parameter refers to the threshold of the difference between faces. Those faces whose distance from the input face is less than the threshold will be returned.
+The 'distance' in the result refers to the quantitative value of the difference between the face and the input face. The smaller the difference, the higher the credibility that the two faces are the same person.
 
 ## Face Token Delete
 ```bash
-curl -X DELETE  "http://172.17.0.1:12547/api/search?facetoken=5827851bb313f2bd9b0a43871bace91098c2d875c7e2914db8dd733dee419d51"
+curl -X DELETE  "http://172.17.0.1:5001/api/delete?facetoken=5827851bb313f2bd9b0a43871bace91098c2d875c7e2914db8dd733dee419d51"
 ```
